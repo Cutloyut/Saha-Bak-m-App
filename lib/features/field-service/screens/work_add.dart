@@ -52,51 +52,55 @@ class _WorkAddState extends State<WorkAdd> {
         key: _formKey,
         child: Padding(
           padding: EdgeInsetsGeometry.all(8),
-          child: Column(
-            spacing: 5,
-            children: [
-              TextFormField(
-                validator: appvalidator,
-                controller: titleController,
-                decoration: InputDecoration(hintText: "Arıza/Bakım Adı"),
-              ),
-              TextFormField(
-                validator: appvalidator,
-                controller: techniciannameController,
-                decoration: InputDecoration(hintText: "Teknisyen Adı Soayadı"),
-              ),
-              TextFormField(
-                validator: appvalidator,
-                controller: qrController,
-                decoration: InputDecoration(hintText: "Qr kod"),
-              ),
-              TextFormField(
-                validator: appvalidator,
-                controller: notesController,
-                maxLines: 4,
-                decoration: InputDecoration(hintText: "Notunuz"),
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      _updateOrderTechnician(
-                        titleController.text,
-                        techniciannameController.text,
-                        qrController.text,
-                        notesController.text,
-                        context,
-                      );
-                      ScaffoldMessenger.of(
-                        context,
-                      ).showSnackBar(SnackBar(content: Text("İşlem Başarılı")));
-                    }
-                  },
-                  child: Text(TranslateString('saved').tr),
+          child: SingleChildScrollView(
+            child: Column(
+              spacing: 5,
+              children: [
+                TextFormField(
+                  validator: appvalidator,
+                  controller: titleController,
+                  decoration: InputDecoration(hintText: "Arıza/Bakım Adı"),
                 ),
-              ),
-            ],
+                TextFormField(
+                  validator: appvalidator,
+                  controller: techniciannameController,
+                  decoration: InputDecoration(
+                    hintText: "Teknisyen Adı Soayadı",
+                  ),
+                ),
+                TextFormField(
+                  validator: appvalidator,
+                  controller: qrController,
+                  decoration: InputDecoration(hintText: "Qr kod"),
+                ),
+                TextFormField(
+                  validator: appvalidator,
+                  controller: notesController,
+                  maxLines: 4,
+                  decoration: InputDecoration(hintText: "Notunuz"),
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        _updateOrderTechnician(
+                          titleController.text,
+                          techniciannameController.text,
+                          qrController.text,
+                          notesController.text,
+                          context,
+                        );
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text("İşlem Başarılı")),
+                        );
+                      }
+                    },
+                    child: Text(TranslateString('saved').tr),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
