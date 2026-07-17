@@ -1,0 +1,42 @@
+├─ core
+│  ├─ router
+│  │  └─ app_router.dart
+│  ├─ services
+│  │  ├─ local_database_service.dart
+│  │  └─ mock_api_service.dart
+│  ├─ theme
+│  │  └─ app_theme.dart
+│  └─ utils
+│     ├─ filter_status_extentions.dart
+│     ├─ translation_service.dart
+│     └─ work_order_status_extension.dart
+├─ features
+│  └─ field-service
+│     ├─ data
+│     │  └─ work_order_repository.dart
+│     ├─ models
+│     │  ├─ app_user_model.dart
+│     │  ├─ audit_log_model.dart
+│     │  ├─ work_order_model.dart
+│     │  └─ work_order_model.g.dart
+│     ├─ providers
+│     │  ├─ auth_provider.dart
+│     │  └─ filter_provider.dart
+│     └─ screens
+│        ├─ login_screen.dart
+│        ├─ qr_scanner_screen.dart
+│        ├─ work_add.dart
+│        ├─ work_order_detail_screen.dart
+│        └─ work_order_list_screen.dart
+├─ index.dart
+├─ main.dart
+└─ shated
+   └─ widgets
+      ├─ app_color_text.dart
+      ├─ app_text.dart
+      ├─ empty_state.dart
+      ├─ filter_segmented_button.dart
+      └─ workorder_list
+         ├─ work_info_widget.dart
+         ├─ work_order_container.dart
+         └─ work_order_list.dart
