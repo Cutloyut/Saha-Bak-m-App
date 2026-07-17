@@ -11,6 +11,7 @@ class WorkAdd extends StatefulWidget {
 class _WorkAddState extends State<WorkAdd> {
   final titleController = TextEditingController();
   final notesController = TextEditingController();
+  final qrController = TextEditingController();
   final techniciannameController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
@@ -19,6 +20,7 @@ class _WorkAddState extends State<WorkAdd> {
   Future<void> _updateOrderTechnician(
     String title,
     String technician,
+    String qr,
     String note,
     BuildContext context,
   ) async {
@@ -28,7 +30,7 @@ class _WorkAddState extends State<WorkAdd> {
         title: title,
         status: WorkOrderStatus.open,
         assignmentTechnician: technician,
-        expectedQrCode: "qe-00000",
+        expectedQrCode: qr,
         notes: note,
         photos: "",
         createdAt: DateTime.now(),
@@ -51,6 +53,7 @@ class _WorkAddState extends State<WorkAdd> {
         child: Padding(
           padding: EdgeInsetsGeometry.all(8),
           child: Column(
+            spacing: 5,
             children: [
               TextFormField(
                 validator: appvalidator,
@@ -60,13 +63,18 @@ class _WorkAddState extends State<WorkAdd> {
               TextFormField(
                 validator: appvalidator,
                 controller: techniciannameController,
-                decoration: InputDecoration(hintText: "Teknisyen Adı"),
+                decoration: InputDecoration(hintText: "Teknisyen Adı Soayadı"),
+              ),
+              TextFormField(
+                validator: appvalidator,
+                controller: qrController,
+                decoration: InputDecoration(hintText: "Qr kod"),
               ),
               TextFormField(
                 validator: appvalidator,
                 controller: notesController,
                 maxLines: 4,
-                decoration: InputDecoration(hintText: "Teknisyen Adı"),
+                decoration: InputDecoration(hintText: "Notunuz"),
               ),
               SizedBox(
                 width: double.infinity,
@@ -76,6 +84,7 @@ class _WorkAddState extends State<WorkAdd> {
                       _updateOrderTechnician(
                         titleController.text,
                         techniciannameController.text,
+                        qrController.text,
                         notesController.text,
                         context,
                       );

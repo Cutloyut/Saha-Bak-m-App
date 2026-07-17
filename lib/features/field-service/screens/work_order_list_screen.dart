@@ -12,6 +12,7 @@ class WorkOrderListScreen extends StatefulWidget {
 }
 
 class _WorkOrderListScreenState extends State<WorkOrderListScreen> {
+  final searchController = TextEditingController();
   final timeController = TextEditingController();
   @override
   void initState() {
@@ -24,6 +25,7 @@ class _WorkOrderListScreenState extends State<WorkOrderListScreen> {
   @override
   void dispose() {
     timeController.dispose();
+    searchController.dispose();
     super.dispose();
   }
 
@@ -57,28 +59,41 @@ class _WorkOrderListScreenState extends State<WorkOrderListScreen> {
                 )
               : const SizedBox.shrink(),
         ],
-        bottom: const PreferredSize(
+        bottom: PreferredSize(
           preferredSize: Size.fromHeight(80),
           child: FilterSegmentedButton(),
         ),
       ),
-      body: RefreshIndicator(
-        onRefresh: _refreshData,
-        child: Consumer<FilterProvider>(
-          builder: (context, filterProvider, child) {
-            if (filterProvider.isLoading) {
-              return const Center(child: CircularProgressIndicator());
-            }
-            final filteredList = filterProvider.getFilteredWorkOrders(
-              filterProvider.orders,
-              authProvider.currentUser!,
-            );
-            if (filteredList.isEmpty) {
-              return const EmptyState();
-            }
-            return WorkOrderList(orderlist: filteredList);
-          },
-        ),
+      body: Column(
+        children: [
+          TextField(
+            controller: searchController,
+            onChanged: (value) => context.read<FilterProvider>().serachRegen(
+              searchController.text,
+            ),
+            decoration: InputDecoration(hintText: 'Arama'),
+          ),
+          Expanded(
+            child: RefreshIndicator(
+              onRefresh: _refreshData,
+              child: Consumer<FilterProvider>(
+                builder: (context, filterProvider, child) {
+                  if (filterProvider.isLoading) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  final filteredList = filterProvider.getFilteredWorkOrders(
+                    filterProvider.orders,
+                    authProvider.currentUser!,
+                  );
+                  if (filteredList.isEmpty) {
+                    return const EmptyState();
+                  }
+                  return WorkOrderList(orderlist: filteredList);
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

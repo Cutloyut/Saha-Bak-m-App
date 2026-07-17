@@ -55,7 +55,7 @@ flutter run
 ## 📸 Ekran Görüntüleri
 
 ### 🫕 Giriş Ekranı
-![Dark](screenshots/login.jpeg)
+![Login](screenshots/login.jpeg)
 
 ### 🏠 Ana Sayfa
 ![Home](screenshots/main_menu.jpeg)
@@ -64,6 +64,6 @@ flutter run
 ![Add](screenshots/work_add.jpeg)
 
 ### ✏️ İş Detayları
-![Edit](screenshots/work_detalis.jpeg)
+![detalis](screenshots/work_detalis.jpeg)
 
 

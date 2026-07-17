@@ -12,6 +12,8 @@ class FilterProvider extends ChangeNotifier {
   FilterStatusEnum get filterStatus => _filterStatus ?? FilterStatusEnum.all;
   int? _filterTime;
   int get filterTime => _filterTime ?? 0;
+  String? _searchQuery;
+  String get searchQuery => _searchQuery ?? "";
   bool isLoading = false;
   void statusregen(FilterStatusEnum status) {
     _filterStatus = status;
@@ -20,6 +22,11 @@ class FilterProvider extends ChangeNotifier {
 
   void timeregen(int time) {
     _filterTime = time;
+    notifyListeners();
+  }
+
+  void serachRegen(String text) {
+    _searchQuery = text;
     notifyListeners();
   }
 
@@ -53,10 +60,23 @@ class FilterProvider extends ChangeNotifier {
         return order.createdAt.isAfter(thirtyDaysAgo);
       }).toList();
     }
+
+    if (searchQuery.trim().isNotEmpty) {
+      final query = searchQuery.toLowerCase().trim();
+      tempOrders = tempOrders.where((order) {
+        final matchesTitle = order.title.toLowerCase().contains(query);
+        final matchesNotes = order.notes.toLowerCase().contains(query);
+
+        return matchesTitle || matchesNotes;
+      }).toList();
+    }
+
+    // 5. Denetim Günlüğü (Audit Log)
     log(
-      "Kullanıcı:${currentUserRole.name}, ${DateTime.now()} Tarihinde ${filterStatus.trName} İşleri Listeledi",
+      "Kullanıcı:${currentUserRole.name}, ${DateTime.now()} Tarihinde ${filterStatus.trName} İşleri Listeledi. Arama Kelimesi: '$searchQuery'",
       name: "Audit Log",
     );
+
     return tempOrders;
   }
 
